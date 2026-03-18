@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObject xmlns="http://soap.sforce.com/2006/04/metadata">
+    <label>Prompt Template Type</label>
+    <pluralLabel>Prompt Template Type</pluralLabel>
+    <visibility>Public</visibility>
+    <fields>
+        <fullName>Prompt_Builder_Type__c</fullName>
+        <fieldManageability>DeveloperControlled</fieldManageability>
+        <label>Prompt Builder Type</label>
+        <required>true</required>
+        <type>Picklist</type>
+        <valueSet>
+            <restricted>true</restricted>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>Field Generation</fullName>
+                    <default>true</default>
+                    <label>Field Generation</label>
+                </value>
+                <value>
+                    <fullName>Flex</fullName>
+                    <default>false</default>
+                    <label>Flex</label>
+                </value>
+                <value>
+                    <fullName>Knowledge Answers</fullName>
+                    <default>false</default>
+                    <label>Knowledge Answers</label>
+                </value>
+                <value>
+                    <fullName>Knowledge Field Updates</fullName>
+                    <default>false</default>
+                    <label>Knowledge Field Updates</label>
+                </value>
+                <value>
+                    <fullName>Record Prioritization</fullName>
+                    <default>false</default>
+                    <label>Record Prioritization</label>
+                </value>
+                <value>
+                    <fullName>Record Summary</fullName>
+                    <default>false</default>
+                    <label>Record Summary</label>
+                </value>
+                <value>
+                    <fullName>Review My Day</fullName>
+                    <default>false</default>
+                    <label>Review My Day</label>
+                </value>
+                <value>
+                    <fullName>Sales Email</fullName>
+                    <default>false</default>
+                    <label>Sales Email</label>
+                </value>
+                <value>
+                    <fullName>Sales Pitch Coaching</fullName>
+                    <default>false</default>
+                    <label>Sales Pitch Coaching</label>
+                </value>
+                <value>
+                    <fullName>Service Email</fullName>
+                    <default>false</default>
+                    <label>Service Email</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
+    </fields>
+</CustomObject>
