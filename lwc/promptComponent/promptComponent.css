@@ -1,0 +1,18 @@
+/* Custom styling to modify modal width and spacing */
+.slds-modal__container {
+    width: 60%;  /* Adjust modal width */
+    max-width: 80rem; /* Set a maximum width */
+}
+
+.slds-modal__content {
+    padding: 2rem; /* Increase padding inside the modal */
+}
+
+.slds-modal__header {
+    background-color: #f4f6f9; /* Optional: change header background color */
+    padding-bottom: 1rem; /* Optional: reduce padding in header */
+}
+
+.slds-modal__footer {
+    padding-top: 1.5rem; /* Adjust space between content and footer */
+}

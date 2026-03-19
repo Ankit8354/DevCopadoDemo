@@ -1,0 +1,124 @@
+<template>
+    <div class="header">
+        <div class="title">Prompt Builder</div>
+        <div class="header-buttons">
+            <button class="header-btn" onclick={handleDeactivate}> {buttonLabel}</button>
+            <!-- <div class="dropdown">
+                <select id="saveAsSelect" class="header-dropdown" onchange={handleSaveAs}>
+                    <option value="newVersion">Save As New Version</option>
+                    <option value="newTemplate">Save As New Template</option>
+                </select>
+            </div> -->
+            <lightning-button-menu label="Save As" alternative-text="Save As" icon-name="utility:down" variant="brand"
+                onselect={handleMenuSelect}>
+                <lightning-menu-item label="Save As a New Version" value="newVersion"></lightning-menu-item>
+                <lightning-menu-item label="Save As a New Template" value="newTemplate"></lightning-menu-item>
+            </lightning-button-menu>
+            <div class="'Data Table">
+                <template if:true={showTable}>
+                    <lightning-datatable key-field="id" data={tableData} columns={columns} hide-checkbox-column="true">
+                    </lightning-datatable>
+                </template>
+            </div>
+            <button class="header-btn" onclick={handleSave}>Save</button>
+        </div>
+
+    </div>
+    <div class="main-section">
+        <div class="workspace">
+            <div class="slds-grid slds-grid_align-spread slds-p-top_medium">
+                <div class="slds-col slds-size_1-of-4 adjust_header">
+                    <h2>Prompt Template Workspace</h2>
+                </div>
+
+                <div class="slds-col slds-size_1-of-4 slds-m-right_medium adjust">
+                    <lightning-combobox label="Resource Category" placeholder="Select a resource category..."
+                        options={categoryOptions} value={selectedCategory} onchange={handleCategoryChange}>
+                    </lightning-combobox>
+                </div>
+
+                <div class="slds-col slds-size_1-of-4 slds-m-right_medium adjust">
+                    <lightning-combobox label="Resources" placeholder="Search for or select a resource to insert..."
+                        options={resourceOptions} value={selectedValue} onchange={handleObjectChange}
+                        disabled={isResourceDropdownDisabled}>
+                    </lightning-combobox>
+                </div>
+
+                <div class="slds-col slds-size_1-of-4 breadcrumb breadcrumb-input-style">
+                    <nav role="navigation" aria-label="Breadcrumbs">
+                        <ol class="slds-breadcrumb slds-list_horizontal slds-wrap">
+                            <li class="slds-breadcrumb__item">
+                                <span class="slds-icon_container slds-icon-utility-archive" title="Archive">
+                                    <lightning-icon icon-name="utility:archive" size="small" class="custon-icon"
+                                        alternative-text="Archive"></lightning-icon>
+                                </span>
+                                <span>{formData.promptObject} &gt; {formData.promptObjectField} </span>
+                            </li>
+                        </ol>
+                    </nav>
+                </div>
+            </div>
+
+            <!-- <textarea class="prompt-textarea" placeholder="Create a prompt template with natural lanuage instructions grounded in CRM data using the Role,Task, and Format framework" oninput={handleInputChange}></textarea> -->
+
+            <div contenteditable="true" id="editableParagraph" class="prompt-textarea" onfocusout={saveCursorPosition}>
+            </div>
+
+            <!-- Div to show the text with dynamic values highlighted -->
+        </div>
+
+        <div class="configuration">
+            <h2>Configuration</h2>
+            <label for="modelTypeSelect">Model Type</label>
+            <select id="modelTypeSelect">
+                <option value="standard">Standard</option>
+                <option value="custom">Custom</option>
+            </select>
+            <label for="modelSelect">Models</label>
+            <select id="modelSelect">
+                <option value="gpt3.5">OpenAI GPT 3.5 Turbo</option>
+                <option value="gpt4">OpenAI GPT 4</option>
+            </select>
+        </div>
+    </div>
+
+    <div class="preview-section">
+        <h2>Preview</h2>
+
+        <div class="resolution-toggle">
+            <label for="resolutionToggle" class="toggle-label">Resolution</label>
+            <input type="checkbox" id="resolutionToggle" class="toggle-button" checked
+                onchange={handleResolutionToggle} />
+            <div class="related-record">
+                <label for="relatedRecordSearch">Related Record</label>
+                <div class="search-container">
+                    <input type="text" id="relatedRecordSearch" class="search-bar" placeholder="Search Records..."
+                        oninput={handleSearch} onclick={toggleSuggestions} />
+                    <ul class="suggestion-list" if:true={showSuggestions}>
+                        <template for:each={filteredRecords} for:item="record">
+                            <li key={record.id} class="suggestion-item" onclick={handleSelect}>
+                                {record.label}
+                            </li>
+                        </template>
+                    </ul>
+                </div>
+            </div>
+            <button class="preview-btn" onclick={getChatGptResponse}>Preview</button>
+        </div>
+
+
+        <div class="preview-results">
+
+            <div class="resolution">
+                <h3>Resolution</h3>
+                <p>{userInput}</p>
+            </div>
+
+
+            <div class="response">
+                <h3>Response</h3>
+                <p>{response}</p>
+            </div>
+        </div>
+    </div>
+</template>
