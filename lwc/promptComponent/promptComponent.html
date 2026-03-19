@@ -1,0 +1,87 @@
+<template>
+   <lightning-spinner alternative-text="Loading" size="medium" if:true={isLoading}></lightning-spinner>
+   <template if:true={isModalOpen}>
+            <section class="slds-modal slds-fade-in-open">
+                <div class="slds-modal__container">
+                    <header class="slds-modal__header">
+                        <h2 class="slds-text-heading_medium">New Prompt Template</h2>
+                        <button class="slds-button slds-button_icon slds-modal__close slds-button_icon-inverse" 
+                                title="Close" onclick={handleCloseModal}>
+                            <lightning-icon icon-name="utility:close" alternative-text="close" variant="bare"></lightning-icon>
+                        </button>
+                    </header>
+                    <div class="slds-modal__content slds-p-around_medium">
+                        <h2>Select the type of prompt template to build. Based on the template type, define the resources available for the template. Learn more in Salesforce Help.</h2>
+                        <!-- First Row: Prompt Template Type -->
+                        <lightning-combobox 
+                            label="Prompt Template Type"
+                            required 
+                            value={selectedTemplateType}
+                            placeholder="Select a template type"
+                            options={templateTypeOptions}
+                            onchange={handlePromptTemplateType}>
+                        </lightning-combobox>
+
+                        <!-- Second Row: Prompt Template Name and API Name side by side -->
+                        <div class="slds-grid slds-grid_align-spread slds-p-top_medium">
+                            <div class="slds-col slds-size_1-of-2 slds-m-right_medium">
+                                <lightning-input 
+                                    label="Prompt Template Name" 
+                                    required 
+                                    onchange={handleTemplateNameChange}>
+                                </lightning-input>
+                            </div>
+                            <div class="slds-col slds-size_1-of-2">
+                                <lightning-input 
+                                    label="API Name" 
+                                    required 
+                                    value={apiName}>
+                                </lightning-input>
+                            </div>
+                        </div>
+
+                        <!-- Third Row: Template Description -->
+                        <lightning-textarea 
+                            label="Template Description"
+                            onchange={handleTemplateDescription}
+                            >
+                        </lightning-textarea>
+
+                        <!-- Fourth Row: Object and Object Field -->
+                        <div class="slds-grid slds-grid_align-spread slds-p-top_medium ">
+                            <div class="slds-col slds-size_1-of-2 slds-m-right_medium">
+                                <lightning-combobox 
+                                    label="Object" 
+                                    placeholder="Select Object" 
+                                    required
+                                    options={objectOptions} 
+                                    onchange={handleObjectChange}>
+                                </lightning-combobox>
+                            </div>
+                            
+                            <div class="slds-col slds-size_1-of-2">
+                                <lightning-combobox 
+                                    label="Object Field" 
+                                    placeholder="Select Field" 
+                                    options={fieldOptions}
+                                    onchange={hanldeObjectField}
+                                    >
+                                </lightning-combobox>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <footer class="slds-modal__footer">
+                        <lightning-button label="Cancel" onclick={handleCloseModal}></lightning-button>
+                        <lightning-button label="Next" variant="brand" onclick={handleNextClick}></lightning-button>
+                    </footer>
+                </div>
+            </section>
+            <div class="slds-backdrop slds-backdrop_open"></div>
+        </template>
+        <template if:false={isLoading}>
+            <template if:true={isPromptTemplateAvailable}>
+                <c-prompt-builder form-data={formData} records={records} selected-object = {selectedObject}></c-prompt-builder>
+            </template>
+        </template>
+</template>
